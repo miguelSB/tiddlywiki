@@ -8,12 +8,18 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install -g tiddlywiki
+#RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
 
+RUN npm install -g tiddlywiki
+RUN mkdir miguel_wiki
+RUN cd miguel_wiki
+RUN tiddlywiki miguel_wiki --init server
+
 EXPOSE 8080
-CMD [ "npm", "start" ]
+
+CMD tiddlywiki miguel_wiki --listen host=0.0.0.0
